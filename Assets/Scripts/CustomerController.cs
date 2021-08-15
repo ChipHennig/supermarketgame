@@ -10,7 +10,8 @@ public class CustomerController : MonoBehaviour
     private int destPoint = 0;
     private NavMeshAgent agent;
 
-    void Start() {
+    void Start() 
+    {
         agent = GetComponent<NavMeshAgent>();
 
         // Disabling auto-breaking allows for continuous movement
@@ -21,7 +22,8 @@ public class CustomerController : MonoBehaviour
         GotoNextPoint();
     }
 
-    void Update() {
+    void Update() 
+    {
         if (!agent.pathPending && agent.remainingDistance < 0.5f) {
             GotoNextPoint();
         }
