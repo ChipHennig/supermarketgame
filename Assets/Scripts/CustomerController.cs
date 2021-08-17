@@ -6,46 +6,37 @@ using UnityEngine.AI;
 
 public class CustomerController : MonoBehaviour
 {
-
-    public Transform[] points;
-    private int destPoint = 0;
     private NavMeshAgent agent;
-    private bool isShopping;
-    private int numItems;
-    private int itemsBought;
+    private int numItemsLeft;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        isShopping = true;
+        numItemsLeft = Random.Range(1, 5);
 
         // Disabling auto-breaking allows for continuous movement
         // between points (ie the agent doesn't slow down as it 
         // approaches a destination point)
         agent.autoBraking = false;
 
-        GotoNextPoint();
+        FindItem();
     }
 
     void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < .5f)
         {
-            GotoNextPoint();
+            numItemsLeft--;
+            if(numItemsLeft != 0) {
+                FindItem();
+            } else {
+                agent.destination = GameObject.FindGameObjectWithTag("Door").transform.position;
+            }
         }
     }
 
-    void GotoNextPoint()
+    void FindItem()
     {
-        // returns if no points have been set up
-        // if (points.Length == 0)
-        // {
-        //     return;
-        // }
-
-        // agent.destination = points[destPoint].position;
-        // destPoint = (destPoint + 1) % points.Length;
-
         GameObject[] shelves = GameObject.FindGameObjectsWithTag("Shelf");
         agent.destination = GetRandomPointAlongCollider(
             shelves[Random.Range(0, shelves.Length)].GetComponent<BoxCollider>()
@@ -54,9 +45,10 @@ public class CustomerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Door") && !isShopping)
+        Debug.Log("Collide");
+        if (other.gameObject.CompareTag("Door") && numItemsLeft == 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -68,7 +60,7 @@ public class CustomerController : MonoBehaviour
         {
             if (dims[i] == dims.Min())
             {
-                dims[i] *= (1 - (Mathf.Round(Random.Range(0f, 1f)) * 2));
+                dims[i] *= (1 - (Random.Range(0, 2) * 2));
             }
             else
             {
