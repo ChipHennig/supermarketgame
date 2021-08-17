@@ -19,7 +19,6 @@ public class EmployeeController : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
                 agent.destination = hit.point;
-                Debug.Log(hit.point);
             }
         }
     }
