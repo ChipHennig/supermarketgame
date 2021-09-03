@@ -75,8 +75,14 @@ public class EmployeeController : EntityController
             chosenShelf.GetComponent<StockContainer>().MaxStock)
         {
             backStock.Stock--;
-            if(backStock.Stock > 0) {
+            if (backStock.Stock > 0)
+            {
                 chosenShelf.GetComponent<StockContainer>().Stock++;
+            }
+            else
+            {
+                doingTask = false;
+                CancelInvoke();
             }
         }
         else
