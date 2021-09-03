@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EmployeeController : MonoBehaviour
+public class EmployeeController : EntityController
 {
-    NavMeshAgent agent;
 
-    void Start()
+    protected override void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        base.Start();
     }
 
-    void Update() 
+    protected override void Update() 
     {
+        base.Update();
+        
         if (Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
 
@@ -22,4 +23,5 @@ public class EmployeeController : MonoBehaviour
             }
         }
     }
+
 }

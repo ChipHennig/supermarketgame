@@ -5,9 +5,11 @@ using UnityEngine;
 public class StoreManager : MonoBehaviour
 {
     public GameObject customerPrefab;
+    private GameObject[] shelves;
     // Start is called before the first frame update
     void Start()
     {
+        shelves = GameObject.FindGameObjectsWithTag("Shelf");
         InvokeRepeating("AddCustomer", 1, 6);
     }
 
