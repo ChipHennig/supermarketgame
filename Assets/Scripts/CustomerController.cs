@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class CustomerController : EntityController
 {
     private int numItemsLeft;
+    private GameObject nextShelf;
 
     protected override void Start()
     {
@@ -27,7 +28,7 @@ public class CustomerController : EntityController
         
         if (!agent.pathPending && agent.remainingDistance < .5f)
         {
-            numItemsLeft--;
+            TakeItem();
             if(numItemsLeft != 0) {
                 FindItem();
             } else {
@@ -35,13 +36,18 @@ public class CustomerController : EntityController
             }
         }
     }
-
     void FindItem()
     {
         GameObject[] shelves = GameObject.FindGameObjectsWithTag("Shelf");
+        nextShelf = shelves[Random.Range(0, shelves.Length)];
         agent.destination = GetRandomPointAlongCollider(
-            shelves[Random.Range(0, shelves.Length)].GetComponent<BoxCollider>()
+            nextShelf.GetComponent<BoxCollider>()
         );
+    }
+
+    void TakeItem() {
+        numItemsLeft--;
+        nextShelf.GetComponent<StockContainer>().Stock--;
     }
 
     private void OnTriggerEnter(Collider other)

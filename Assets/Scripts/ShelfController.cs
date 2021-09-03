@@ -1,37 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ShelfController : MonoBehaviour
 {
     public GameObject textObj;
-    private TextMesh stockText;
-    private int numStock;
-    public int Stock
-    {
-        get
-        {
-            return numStock;
-        }
-        set
-        {
-            numStock = value;
-            if (numStock < 0)
-            {
-                numStock = 0;
-            }
-        }
-    }
+    private TextMeshPro stockText;
+    private StockContainer container;
 
     // Start is called before the first frame update
     void Start()
     {
-        stockText = textObj.GetComponent<TextMesh>();
+        container = gameObject.GetComponent<StockContainer>();
+        stockText = textObj.GetComponent<TextMeshPro>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        stockText.text = container.Stock + "/" + container.MaxStock;
     }
 }

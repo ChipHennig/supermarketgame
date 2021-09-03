@@ -19,7 +19,8 @@ public abstract class EntityController : MonoBehaviour
     {
         
     }
-    public Vector3 GetRandomPointAlongCollider(BoxCollider boxCollider)
+
+    protected Vector3 GetRandomPointAlongCollider(BoxCollider boxCollider)
     {
         Vector3 extents = boxCollider.size / 2f;
         float[] dims = { extents.x, extents.y, extents.z };
