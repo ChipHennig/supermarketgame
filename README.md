@@ -1,1 +1,3 @@
 # supermarketgame
+
+![demo](./demo.gif)
